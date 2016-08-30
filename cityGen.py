@@ -18,13 +18,27 @@ class City:
     cityCount = 0
 
     def __init__(self):
-        #self.name = name
-        #self.size = size
         self.cityCount += 1
 
-    def setValues(self, name, size):
+    def setValues(self, name="None", size="None"):
         self.name = name
         self.size = size
+        if size == "None":
+            self.randomSize()
+        if name == "None":
+            name = "Random"
+
+    def randomSize(self):
+        sizeChoice = ['Thorp',
+                      'Hamlet',
+                      'Village',
+                      'Small Town',
+                      'Large Town',
+                      'Small City',
+                      'Large City',
+                      'Metropolis'
+                      ]
+        self.size = random.choice(sizeChoice)
 
     def cityPopulation(self):
         cityPopRange = {'Thorp': (1, 20),
@@ -65,15 +79,14 @@ class City:
         self.childPop = self.cityPop * self.childPercent
 
     def displayCity(self):
-        tOverview = "Name: " + self.name + ", City Size: " + self.size
+        tOverview = "Name: " + self.name + " City Size: " + self.size
         tPop = "\nTotal population (including children): " + str(self.cityPop)
         tKidsPop = "\nTotal children: " + str(round(self.childPop, 0))
         tKidsPer = " (" + str(self.childPercent) + "%)"
         tArea = "\nTotal city area: " + str(self.cityArea)
-        tDense = "\nPopulation density: " + str(round(self.popDensity, 0))
-        outString = str(tOverview) + str(tPop) + str(tArea) + str(tDense) + str(tKidsPop) + str(tKidsPer)
+        tDense = "\nPopulation density: "+str(round(self.popDensity, 0))+"\n"
+        outString = str(tOverview)+str(tPop)+str(tArea)+str(tDense)+str(tKidsPop)+str(tKidsPer)
         return outString
-# Uncomment to test to see if cities work and display correctly
 
 
 class Main(QtGui.QMainWindow, cityui.Ui_MainWindow):
@@ -91,31 +104,29 @@ class Main(QtGui.QMainWindow, cityui.Ui_MainWindow):
     def setCity(self):
         cityType = str(self.cityTypeF.text())
         cityName = str(self.cityNameF.text())
-        print cityName, cityType
-        #self.city.setValues(cityName,cityType)
-        
+        # Uncomment to test values: print cityName, cityType
+        self.city.setValues(cityName, cityType)
+
     def defineOutput(self):
         cityOutput = self.city.displayCity()
         qCityOutput = QtCore.QString(cityOutput)
         self.cityOutput.append(qCityOutput)
-        #print self.city.size 
-                
-        #self.city.name = cityName
-        #self.city.size = cityType
-        
+
+
 def main():
     app = QtGui.QApplication(sys.argv)
     city1 = City()
-    city1.setValues("George","Thorp")
+    city1.setValues()
     city1.cityPopulation()
     city1.calcPopulation()
     city1.calcChildren()
     form = Main()
     form.addCity(city1)
-    #form.setCity()
+    form.setCity()
     form.show()
     app.exec_()
 
 
 if __name__ == '__main__':
     main()
+
