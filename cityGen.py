@@ -1,14 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
-import random
-import cityui
-from random import randrange
-from PyQt4 import QtCore, QtGui
-from PyQt4.Qt import QTextEdit, QString, QLineEdit
-from libxml2mod import parent
-from blivet import size
+from random import seed, getrandbits, choice, randrange
+
+# Initializes random generator
+randomStart = getrandbits(100)
+seed(randomStart)
 
 # Start defines for City class
 
@@ -20,27 +17,32 @@ class City:
     def __init__(self):
         self.cityCount += 1
 
+# Sets Name and Size Type selection
+
     def setValues(self, name="None", size="None"):
         self.name = name
         self.size = size
-        if size == "None":
-            self.randomSize()
         if name == "None":
-            name = "Random"
+            self.name = "Random"
+        if size == "None":
+            self.size = "Random"
 
-    def randomSize(self):
-        sizeChoice = ['Thorp',
-                      'Hamlet',
-                      'Village',
-                      'Small Town',
-                      'Large Town',
-                      'Small City',
-                      'Large City',
-                      'Metropolis'
-                      ]
-        self.size = random.choice(sizeChoice)
+# Randomizes city population and area based on city Size Type (self.size).
 
     def cityPopulation(self):
+        cityTypes = ['Thorp',
+                     'Hamlet',
+                     'Village',
+                     'Small Town',
+                     'Large Town',
+                     'Small City',
+                     'Large City',
+                     'Metropolis'
+                     ]
+
+        if self.size == "Random":
+            self.size = (choice(cityTypes))
+
         cityPopRange = {'Thorp': (1, 20),
                         'Hamlet': (21, 60),
                         'Village': (61, 200),
@@ -68,15 +70,28 @@ class City:
                                   cityAreaRange[self.size][1])
                         )
 
+# Calculates the population density.
+
     def calcPopulation(self):
         self.popDensity = self.cityPop / self.cityArea
         if self.popDensity < 1:
             self.popDensity = 1
 
+# Calculates a percentage of self.cityPop that are children
+# Children are unable to work and are dependent upon adults
+
     def calcChildren(self):
         # Randomly generates a percentage of the city that are children
         self.childPercent = (round((randrange(0, 50) / 100.0), 2))
         self.childPop = self.cityPop * self.childPercent
+
+    def runCalc(self):
+        self.setValues()
+        self.cityPopulation()
+        self.calcPopulation()
+        self.calcChildren()
+
+# Prints all previously defined variables.
 
     def displayCity(self):
         tOverview = "Name: " + self.name + " City Size: " + self.size
@@ -87,46 +102,11 @@ class City:
         tDense = "\nPopulation density: "+str(round(self.popDensity, 0))+"\n"
         outString = str(tOverview)+str(tPop)+str(tArea)+str(tDense)+str(tKidsPop)+str(tKidsPer)
         return outString
+        # print str(outString) # Uncomment to test functional changes
 
+# Uncomment
+# city1 = City()
+# city1.runCalc()
+# city1.displayCity()
 
-class Main(QtGui.QMainWindow, cityui.Ui_MainWindow):
-
-    def __init__(self, parent=None):
-        super(Main, self).__init__(parent)
-        self.setupUi(self)
-        self.generateCity.clicked.connect(self.defineOutput)
-        self.cityNameF.returnPressed.connect(self.setCity)
-        self.cityTypeF.returnPressed.connect(self.setCity)
-
-    def addCity(self, cityInput):
-        self.city = cityInput
-
-    def setCity(self):
-        cityType = str(self.cityTypeF.text())
-        cityName = str(self.cityNameF.text())
-        # Uncomment to test values: print cityName, cityType
-        self.city.setValues(cityName, cityType)
-
-    def defineOutput(self):
-        cityOutput = self.city.displayCity()
-        qCityOutput = QtCore.QString(cityOutput)
-        self.cityOutput.append(qCityOutput)
-
-
-def main():
-    app = QtGui.QApplication(sys.argv)
-    city1 = City()
-    city1.setValues()
-    city1.cityPopulation()
-    city1.calcPopulation()
-    city1.calcChildren()
-    form = Main()
-    form.addCity(city1)
-    form.setCity()
-    form.show()
-    app.exec_()
-
-
-if __name__ == '__main__':
-    main()
 
