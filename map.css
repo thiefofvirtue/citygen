@@ -1,0 +1,16 @@
+.inactive {
+	background: linear-gradient(white,black);
+	color: white;
+	}
+
+.active {
+	background: linear-gradient(white,gray);
+	color: black;
+}
+
+div {
+	border:1px solid black;
+	width:150px;
+	height:150px;
+	overflow:auto;
+}
