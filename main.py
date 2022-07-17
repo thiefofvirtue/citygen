@@ -1,13 +1,7 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty
-)
-
 from city import City
 
 
@@ -25,9 +19,6 @@ class SubmitButton(Button):
 
 
 class LayoutWidget(BoxLayout):
-    submit = ObjectProperty(None)
-    output = ObjectProperty(None)
-
     pass
 
 
