@@ -18,14 +18,14 @@ class SubmitButton(Button):
         output_object.text = city_data
 
 
-class LayoutWidget(BoxLayout):
+class RootWidget(BoxLayout):
     pass
 
 
 class CityGenApp(App):
 
     def build(self):
-        app = LayoutWidget()
+        app = RootWidget()
         return app
 
 
