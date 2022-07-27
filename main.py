@@ -2,7 +2,8 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from city import City
+from city import City, city_types
+from kivy.properties import ListProperty
 
 
 class SubmitButton(Button):
@@ -23,9 +24,11 @@ class RootWidget(BoxLayout):
 
 
 class CityGenApp(App):
+    city_sizes = ListProperty(city_types)
 
     def build(self):
         app = RootWidget()
+
         return app
 
 

@@ -1,6 +1,17 @@
 from random import seed, getrandbits, choice, randrange
 
 
+city_types = ['Thorp',
+              'Hamlet',
+              'Village',
+              'Small Town',
+              'Large Town',
+              'Small City',
+              'Large City',
+              'Metropolis'
+              ]
+
+
 class City:
     """Class for the city. This will be called later to define individual cities"""
 
@@ -24,15 +35,6 @@ class City:
         Generates city population.
         :return: None
         """
-        city_types = ['Thorp',
-                      'Hamlet',
-                      'Village',
-                      'Small Town',
-                      'Large Town',
-                      'Small City',
-                      'Large City',
-                      'Metropolis'
-                      ]
 
         if not self.size:
             self.size = (choice(city_types))

@@ -18,9 +18,11 @@
             text: "City Size"
             text_size: None, 20
             #size: self.texture_size
-        TextInput
+        Spinner:
             id: city_size
-            multiline: False
+            text: "Select One"
+            values: app.city_sizes
+
 
     SubmitButton:
         id: submit_button
