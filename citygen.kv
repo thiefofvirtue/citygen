@@ -1,0 +1,37 @@
+#:kivy 2.1.0
+
+<RootWidget>:
+    orientation: "vertical"
+
+    GridLayout:
+        cols: 2
+        #size_hint_max_y: 60
+
+        Label:
+            text: "City Name"
+            text_size: None, 20
+            #size: self.texture_size +
+        TextInput:
+            id: city_name
+            multiline: False
+        Label:
+            text: "City Size"
+            text_size: None, 20
+            #size: self.texture_size
+        TextInput
+            id: city_size
+            multiline: False
+
+    SubmitButton:
+        id: submit_button
+        padding: [2, 4]
+        on_press: self.update(output_text, name=city_name.text, size_arg=city_size.text)
+
+    Label:
+        id: output_text
+        text:
+
+<SubmitButton>:
+    text: "Generate!"
+    size_hint_max_y: 20
+    size_hint_max_x: 30

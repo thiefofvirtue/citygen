@@ -4,7 +4,7 @@ from random import seed, getrandbits, choice, randrange
 class City:
     """Class for the city. This will be called later to define individual cities"""
 
-    def __init__(self, name: str = None, size: [None, tuple[int]] = None, initial_seed: int = None):
+    def __init__(self, name: str = None, size=None, initial_seed: int = None):
         # Initializes random generator
         self.random_start = initial_seed or getrandbits(100)
         seed(self.random_start)
