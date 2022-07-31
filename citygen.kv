@@ -22,12 +22,25 @@
             id: city_size
             text: "Select One"
             values: app.city_sizes
-
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout:
+            orientation: "horizontal"
+            Label:
+                text: "Race"
+            Label:
+                text: "% population"
+            Button:
+                text: "Add race(s)"
+                on_press: root.add_race_boxes()
+        BoxLayout:
+            id: race_layout
+            orientation: "vertical"
 
     SubmitButton:
         id: submit_button
         padding: [2, 4]
-        on_press: self.update(output_text, name=city_name.text, size_arg=city_size.text)
+        on_press: self.update(output_text, name=city_name.text, size_arg=city_size.text, races=race_layout)
 
     Label:
         id: output_text
@@ -37,3 +50,6 @@
     text: "Generate!"
     size_hint_max_y: 20
     size_hint_max_x: 30
+
+<RemoveRaceButton>
+    on_release: self.remove_me()
